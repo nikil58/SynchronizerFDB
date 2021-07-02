@@ -1,0 +1,5 @@
+Email: org1@pskoved1231231u.ru; Password: password-1123
+Email: org2@pskovedu.ru; Password: password-200
+Email: org3@pskovedu.ru; Password: password-300
+Email: org4@pskovedu.ru; Password: password-4
+Email: org5@pskovedu.ru; Password: password-5
