@@ -18,6 +18,7 @@ public class Main {
      */
     public static void main(String[] args) throws FileNotFoundException {
         String url, username, password, newpwd, email;
+        String regex = ":\\{plain}".replace("\\","");
         ArrayList <String> confData = new ArrayList<String>();
         File confFile = new File(Paths.get("conf.cfg").toAbsolutePath().toString()); //getting data from our cfg file
         Scanner scanner = new Scanner(confFile);
@@ -35,13 +36,13 @@ public class Main {
                         Statement statement = conn.createStatement();
                         ResultSet resultSet;
                         resultSet = statement.executeQuery("SELECT PASSWD, EMAIL FROM IMAP_PASS");
-                        File passwordsFile = new File("passwords.txt");
+                        File passwordsFile = new File(".passwd");
                         PrintWriter pw = new PrintWriter(passwordsFile);
                         while (resultSet.next()) {
                             Vector <String> dataDB = new Vector<>();
                             dataDB.add(resultSet.getNString(1));
                             dataDB.add(resultSet.getNString(2));
-                            pw.println("Email: " + dataDB.get(1) + "; Password: " + dataDB.get(0));
+                            pw.println(dataDB.get(1).replace("@pskovedu.ru",regex)  + dataDB.get(0));
                         }
                         pw.close();
                         System.out.println("Connection successful!");
@@ -57,7 +58,7 @@ public class Main {
                 try {
                     Class.forName("org.firebirdsql.jdbc.FBDriver").getDeclaredConstructor().newInstance();
                     try (Connection conn = DriverManager.getConnection(url, username, password)) {
-                        File passwdFile = new File(Paths.get("passwords.txt").toAbsolutePath().toString());
+                        File passwdFile = new File(Paths.get(".passwd").toAbsolutePath().toString());
                         ArrayList<String> passData = new ArrayList<String>();
                         Scanner scanner1 = new Scanner(passwdFile);
                         while (scanner1.hasNextLine()) {
@@ -65,10 +66,10 @@ public class Main {
                         }
 
                         for (int i = 0; i < passData.size(); i++) {
-                            String[] substr = passData.get(i).split("; ");
-                            email = substr[0].replace("Email: ", "");
+                            String[] substr = passData.get(i).replace(regex,";").split(";");
+                            email = substr[0].concat("@pskovedu.ru");
                             Statement statement = conn.createStatement();
-                            newpwd = substr[1].replace("Password: ", "");
+                            newpwd = substr[1];
                             statement.executeUpdate("UPDATE IMAP_PASS SET PASSWD = \'" + newpwd + "\' WHERE EMAIL = \'" + email + "\'");
                             statement.close();
                         }
