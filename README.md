@@ -23,10 +23,17 @@ Also you need to have conf.cfg and .passwd (for push) in the root folder.
 
 4. If you want to run this script from the terminal you have to the next:  open terminal in the "src" folder, then you have to drop the conf.cfg and .passwd (for push) file into this folder. Then write next strings:
 
-
+For Winodws:
     ```
         javac -g -cp jaybird.jar; Main.java
         java -cp jaybird.jar; Main PULL_OR_PUSH
+    ```
+    
+For Linux:
+    ```
+    javac -g -cp jaybird.jar, Main.java
+    java -cp  .:jaybird.jar:./ Main PULL_OR_PUSH
+
     ```
 ___________________________________________________________
 conf.cfg should look like this for correct work:
