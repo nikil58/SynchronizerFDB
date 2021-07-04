@@ -27,17 +27,17 @@ For Winodws:
     ```
         javac -g -cp jaybird.jar; Main.java
         java -cp jaybird.jar; Main PULL_OR_PUSH
+        
     ```
     
     
 For Linux:
-
     ```
+    
     javac -g -cp jaybird.jar, Main.java
     java -cp  .:jaybird.jar:./ Main PULL_OR_PUSH
 
     ```
-    
     
 ___________________________________________________________
 conf.cfg should look like this for correct work:
