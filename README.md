@@ -27,7 +27,7 @@ Also you need to have conf.cfg and .passwd (for push) in the root folder.
 
 ```
     javac -g -cp jaybird.jar; Main.java
-    java -cp jaybird.jar; Main PULL_OR_PUSH
+    java -cp jaybird.jar; Main pull_OR_push
 ```
      
 **For Linux:**
