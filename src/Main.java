@@ -31,32 +31,34 @@ public class Main {
             case "pull":
                 System.out.println("Start pull...");
                 try {
-                    Class.forName("org.firebirdsql.jdbc.FBDriver").getDeclaredConstructor().newInstance();
+                    Class.forName("org.postgresql.Driver").getDeclaredConstructor().newInstance();
                     try (Connection conn = DriverManager.getConnection(url, username, password)) {
                         Statement statement = conn.createStatement();
                         ResultSet resultSet;
-                        resultSet = statement.executeQuery("SELECT PASSWD, EMAIL FROM IMAP_PASS");
+                        resultSet = statement.executeQuery("SELECT \"PASSWD\", \"EMAIL\" FROM \"IMAP_PASS\"");
                         File passwordsFile = new File(".passwd");
                         PrintWriter pw = new PrintWriter(passwordsFile);
                         while (resultSet.next()) {
                             Vector <String> dataDB = new Vector<>();
-                            dataDB.add(resultSet.getNString(1));
-                            dataDB.add(resultSet.getNString(2));
+                            dataDB.add(resultSet.getString(1));
+                            dataDB.add(resultSet.getString(2));
                             pw.println(dataDB.get(1).replace("@pskovedu.ru",regex)  + dataDB.get(0));
                         }
                         pw.close();
                         System.out.println("Connection successful!");
                     } catch (Exception ex) {
+                        System.out.println(ex.getMessage());
                         System.out.println("Connection failed...");
                     }
                 } catch (Exception ex) {
+                    System.out.println(ex.getMessage());
                     System.out.println("Connection failed...");
                 }
                 break;
             case "push":
-                System.out.println("Start push...");
+                System.out.println("Start push....");
                 try {
-                    Class.forName("org.firebirdsql.jdbc.FBDriver").getDeclaredConstructor().newInstance();
+                    Class.forName("org.postgresql.Driver").getDeclaredConstructor().newInstance();
                     try (Connection conn = DriverManager.getConnection(url, username, password)) {
                         File passwdFile = new File(Paths.get(".passwd").toAbsolutePath().toString());
                         ArrayList<String> passData = new ArrayList<String>();
@@ -70,7 +72,7 @@ public class Main {
                             email = substr[0].concat("@pskovedu.ru");
                             Statement statement = conn.createStatement();
                             newpwd = substr[1];
-                            statement.executeUpdate("UPDATE IMAP_PASS SET PASSWD = \'" + newpwd + "\' WHERE EMAIL = \'" + email + "\'");
+                            statement.executeUpdate("UPDATE \"IMAP_PASS\" SET \"PASSWD\" = \'" + newpwd + "\' WHERE \"EMAIL\" = \'" + email + "\'");
                             statement.close();
                         }
 
