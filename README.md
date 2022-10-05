@@ -22,13 +22,13 @@ switch ("push"){
 Also you need to have conf.cfg and .passwd (for push) in the root folder.
 4. If you want to run this script from the terminal you have to the next:  open terminal in the "src" folder, then you have to drop the conf.cfg and .passwd (for push) file into this folder. Then write next strings:
     ```
-        javac -g -cp postgresql-42.5.0.jar; Main.java
-        java -cp postgresql-42.5.0.jar; Main PULL_OR_PUSH
+        javac -g -cp jaybird.jar; Main.java
+        java -cp jaybird.jar; Main PULL_OR_PUSH
     ```
 ___________________________________________________________
 conf.cfg should look like this for correct work:
 ```
-jdbc:postgresql://localhost:8080/dbName
+jdbc:firebirdsql://localhost/C:/Users/User/Downloads/mail.fdb?serverTimezone=Europe/Moscow&useSSL=false
 SYSDBA
 masterkey
 ```
